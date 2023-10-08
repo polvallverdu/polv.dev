@@ -4,6 +4,8 @@
 	import getIcon from '$lib/icons';
 	export let project: ProjectDataType;
 
+	let isPaused = true;
+
 	let dialog: HTMLDialogElement | null;
 	onMount(() => {
 		dialog = document.getElementById(`${project.name}-dialog`) as HTMLDialogElement;
@@ -15,6 +17,7 @@
 
 	const closeDialog = () => {
 		dialog?.close();
+		isPaused = true;
 	};
 </script>
 
@@ -90,7 +93,7 @@
 
 	<!-- Video -->
 	<div class="mt-12 lg:px-12 w-auto">
-		<video class="rounded-lg" controls autoplay muted>
+		<video class="rounded-lg" controls autoplay muted bind:paused={isPaused}>
 			<source src={project.video} type="video/mp4" />
 			Your browser does not support the video tag.
 		</video>
@@ -101,12 +104,12 @@
 	dialog::backdrop {
 		background-color: rgba(0, 0, 0, 0.47);
 		backdrop-filter: blur(8px);
-		opacity: 0;
+		opacity: 1;
 		animation: fadeIn 0.5s ease-in-out forwards;
 	}
 
 	.dialog-transition {
-		opacity: 0;
+		opacity: 1;
 		animation: fadeIn 0.5s ease-in-out forwards;
 	}
 
