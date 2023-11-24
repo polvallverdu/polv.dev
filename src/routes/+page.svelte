@@ -159,11 +159,11 @@
 					<label for="name">
 						<p class={labelsClasses}>Name</p>
 					</label>
-					<input id="name" class={textboxClasses} type="text" required />
+					<input id="name" class={textboxClasses} type="text" required bind:value={name} />
 					<label for="email">
 						<p class={labelsClasses}>Email</p>
 					</label>
-					<input id="email" class={textboxClasses} type="email" required />
+					<input id="email" class={textboxClasses} type="email" required bind:value={email} />
 					<label for="message">
 						<p class={labelsClasses}>Message</p>
 					</label>
@@ -173,6 +173,7 @@
 						placeholder="(max. of 1000 characters)"
 						maxlength="1000"
 						required
+						bind:value={message}
 					/>
 					<input
 						type="submit"
