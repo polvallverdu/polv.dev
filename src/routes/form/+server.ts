@@ -13,7 +13,6 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	const embed = new MessageBuilder()
 		.setTitle('New message')
-		.setAuthor()
 		.addField('Name', `${name}`, true)
 		.addField('Email', `${email}`, true)
 		.addField('Message', `${message}`, false)

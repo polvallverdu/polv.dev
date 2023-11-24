@@ -13,32 +13,31 @@
 	let email = '';
 	let message = '';
 
-	async function submitForm() {
-		try {
-			const response = await fetch('/form', {
-				method: 'POST',
-				body: JSON.stringify({
-					name,
-					email,
-					message
-				})
-			});
-			failed = response.status !== 200;
-			successful = response.status === 200;
-		} catch (e) {
-			failed = true;
-		}
-		setTimeout(() => {
-			failed = false;
-			successful = false;
-		}, 5000);
-	}
+	async function submitForm() {}
 
 	let form: HTMLFormElement | null;
 	onMount(() => {
 		form = document.getElementById('contact-form') as HTMLFormElement;
-		form.addEventListener('submit', (event) => {
+		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
+			try {
+				const response = await fetch('/form', {
+					method: 'POST',
+					body: JSON.stringify({
+						name,
+						email,
+						message
+					})
+				});
+				failed = response.status !== 200;
+				successful = response.status === 200;
+			} catch (e) {
+				failed = true;
+			}
+			setTimeout(() => {
+				failed = false;
+				successful = false;
+			}, 5000);
 		});
 	});
 
@@ -48,11 +47,6 @@
 </script>
 
 <main>
-	<!-- NAV BAR -->
-	<div class="navBarTransition fixed z-10 w-full h-16 backdrop-blur collapse md:visible">
-		<TopBar />
-	</div>
-
 	<!-- TITLE SECTION -->
 	<section id="home">
 		<div
@@ -158,69 +152,45 @@
 			<div class="flex flex-col justify-center w-full">
 				<form
 					method="POST"
+					action="/form"
 					id="contact-form"
 					class="text-white w-[85%] sm:w-[75%] lg:w-1/2 text-left mx-auto"
 				>
-					<label>
+					<label for="name">
 						<p class={labelsClasses}>Name</p>
-						<input name="email" class={textboxClasses} type="text" required bind:value={name} />
 					</label>
-					<label>
+					<input id="name" class={textboxClasses} type="text" required />
+					<label for="email">
 						<p class={labelsClasses}>Email</p>
-						<input name="email" class={textboxClasses} type="email" required bind:value={email} />
 					</label>
-					<label>
+					<input id="email" class={textboxClasses} type="email" required />
+					<label for="message">
 						<p class={labelsClasses}>Message</p>
-						<textarea
-							name="message"
-							class={textboxClasses}
-							placeholder="(max. of 1000 characters)"
-							maxlength="1000"
-							required
-							bind:value={message}
-						/>
 					</label>
-					<button
+					<textarea
+						id="message"
+						class={textboxClasses}
+						placeholder="(max. of 1000 characters)"
+						maxlength="1000"
+						required
+					/>
+					<input
 						type="submit"
 						class="w-full my-8 py-2 px-4 outline outline-2 outline-white bg-black backdrop-blur-md bg-opacity-50 hover:bg-opacity-100 hover:bg-white transition-all hover:text-black font-semibold text-xl rounded"
-						on:click={submitForm}>✈️ Submit</button
-					>
+						value="✈️ Submit"
+					/>
 				</form>
 
 				<div class="text-xl shadow-lg font-semibold text-center">
+					<p class="text-white">
+						or message me on <a href="mailto:contact@polv.dev">contact@polv.dev</a>
+					</p>
 					{#if successful}
 						<p class="text-green-500">Your message was sent successfully!</p>
 					{/if}
 					{#if failed}
 						<p class="text-red-400">Something went wrong. Your message couldn't be sent.</p>
 					{/if}
-				</div>
-
-				<div class="mx-auto flex flex-row flex-wrap justify-evenly w-[85%] sm:w-[75%]">
-					<button
-						class="w-72 my-8 mx-8 py-2 px-4 outline outline-2 outline-white text-white bg-black backdrop-blur-md bg-opacity-50 hover:bg-opacity-100 hover:bg-white transition-all hover:text-black font-semibold text-xl rounded"
-						on:click={() => window.open('mailto:contact@polv.dev', '_blank')?.focus()}
-					>
-						E-mail - contact@polv.dev
-					</button>
-					<button
-						class="w-72 my-8 mx-8 py-2 px-4 outline outline-2 outline-white text-white bg-black backdrop-blur-md bg-opacity-50 hover:bg-opacity-100 hover:bg-white transition-all hover:text-black font-semibold text-xl rounded"
-						on:click={() => window.open('https://x.com/pol_vallverdu', '_blank')?.focus()}
-					>
-						X
-					</button>
-					<button
-						class="w-72 my-8 mx-8 py-2 px-4 outline outline-2 outline-white text-white bg-black backdrop-blur-md bg-opacity-50 hover:bg-opacity-100 hover:bg-white transition-all hover:text-black font-semibold text-xl rounded"
-						on:click={() => window.open('https://github.com/polvallverdu', '_blank')?.focus()}
-					>
-						Github
-					</button>
-					<button
-						class="w-72 my-8 mx-8 py-2 px-4 outline outline-2 outline-niceblue text-niceblue bg-black backdrop-blur-md bg-opacity-50 hover:bg-opacity-100 hover:bg-niceblue transition-all hover:text-black font-semibold text-xl rounded"
-						on:click={() => window.open('https://cdn.polv.dev/files/CV.pdf', '_blank')?.focus()}
-					>
-						CV
-					</button>
 				</div>
 			</div>
 
@@ -247,7 +217,7 @@
 	}
 
 	.contactbg {
-		background-image: url('/matrix.png');
+		background-image: url('/matrix.webp');
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -266,27 +236,10 @@
 		animation: fadeIn 1s ease-out forwards;
 	}
 
-	.navBarTransition {
-		opacity: 0;
-		transform: translateY(-1rem);
-		animation: fadeInTop 0.5s ease-in-out forwards;
-	}
-
 	@keyframes fadeIn {
 		from {
 			opacity: 0;
 			transform: translateY(10rem);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0rem);
-		}
-	}
-
-	@keyframes fadeInTop {
-		from {
-			opacity: 0;
-			transform: translateY(-1rem);
 		}
 		to {
 			opacity: 1;
