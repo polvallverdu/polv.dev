@@ -61,7 +61,7 @@
       </h3-->
 			</div>
 
-			<div class="absolute bottom-28 arrowTransition">
+			<div class="absolute bottom-0 mb-[5vh] arrowTransition">
 				<div class="animate-bounce">
 					<p class="text-white font-extrabold text-3xl align-middle rotate-90">➜</p>
 				</div>
@@ -146,7 +146,7 @@
 			<h2
 				class="font-extrabold text-white w-full text-center h-32 pt-16 text-3xl md:text-6xl drop-shadow-xl"
 			>
-				Contact 📮
+				Contact
 			</h2>
 
 			<div class="flex flex-col justify-center w-full">
