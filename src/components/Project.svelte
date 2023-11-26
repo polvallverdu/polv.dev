@@ -19,11 +19,30 @@
 		dialog?.close();
 		isPaused = true;
 	};
+
+	onMount(() => {
+		dialog?.addEventListener('close', () => {
+			isPaused = true;
+		});
+
+		dialog?.addEventListener('cancel', () => {
+			isPaused = true;
+		});
+
+		// When clicked outside the dialog, close it
+		window.addEventListener('click', (event) => {
+			if (event.target === dialog) {
+				dialog?.close();
+				isPaused = true;
+			}
+		});
+	});
 </script>
 
-<div
+<button
 	style={`background-image: url(${project.image}); background-size: cover; background-position: center; `}
 	class="w-[30rem] h-[23rem] m-2 rounded-xl flex flex-col place-content-between text-white border-4 border-black"
+	on:click={showDialog}
 >
 	<div
 		class="p-2 w-full text-center text-4xl font-semibold bg-black rounded-t-lg bg-opacity-50 backdrop-blur border-b-4 border-black"
@@ -40,63 +59,64 @@
 	>
 		More information ➡️
 	</button>
-</div>
+</button>
 
-<dialog
-	id={`${project.name}-dialog`}
-	class="dialog-transition w-auto h-auto mx-4 xl:mx-48 2xl:mx-72 bg-white px-12 pt-6 rounded-lg"
->
-	<button
-		class="relative text-black text-4xl left-full hover:text-[#ff0000] transition-colors duration-200"
-		on:click={closeDialog}
+<dialog id={`${project.name}-dialog`} class="dialog-transition better-scrollbar mx-4 xl:mx-48 2xl:mx-72 bg-white rounded-lg">
+	<div
+		class="better-scrollbar w-auto h-auto bg-white rounded-lg px-12 pt-6 mb-8"
 	>
-		×
-	</button>
+		<button
+			class="relative z-50 text-black text-4xl left-full hover:text-[#ff0000] transition-colors duration-200"
+			on:click={closeDialog}
+		>
+			×
+		</button>
 
-	<div>
-		<h1 class="text-6xl">
-			{project.name}
-		</h1>
-		<h2 class="text-2xl mt-2">
-			{project.subtitle}
-		</h2>
-	</div>
-
-	<img
-		src={project.image}
-		alt={`${project.name} image`}
-		class="my-8 object-cover h-80 w-full mx-auto border-4 border-black rounded-lg"
-	/>
-
-	<div class="lg:flex justify-between">
 		<div>
-			<p class="text-lg">
-				{@html project.description}
-			</p>
+			<h1 class="text-6xl">
+				{project.name}
+			</h1>
+			<h2 class="text-2xl mt-2">
+				{project.subtitle}
+			</h2>
 		</div>
 
-		<div class="mr-10 mt-10 lg:ml-16 lg:mt-0 min-w-fit">
-			<h3 class="text-xl font-semibold">| Role</h3>
-			<p class="ml-3 mb-8 text-lg">
-				{project.role}
-			</p>
+		<img
+			src={project.image}
+			alt={`${project.name} image`}
+			class="my-8 object-cover h-80 w-full mx-auto border-4 border-black rounded-lg"
+		/>
+
+		<div class="lg:flex justify-between">
 			<div>
-				<h3 class="text-xl font-semibold">| Technologies used</h3>
-				<div class="flex flex-row ml-3">
-					{#each project.technologies as tech}
-						<img alt={tech} src={getIcon(tech)} class="w-10 object-contain my-4 mr-4" />
-					{/each}
+				<p class="text-lg">
+					{@html project.description}
+				</p>
+			</div>
+
+			<div class="mr-10 mt-10 lg:ml-16 lg:mt-0 min-w-fit">
+				<h3 class="text-xl font-semibold">| Role</h3>
+				<p class="ml-3 mb-8 text-lg">
+					{project.role}
+				</p>
+				<div>
+					<h3 class="text-xl font-semibold">| Technologies used</h3>
+					<div class="flex flex-row ml-3">
+						{#each project.technologies as tech}
+							<img alt={tech} src={getIcon(tech)} class="w-10 object-contain my-4 mr-4" />
+						{/each}
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Video -->
-	<div class="mt-12 lg:px-12 w-auto">
-		<video class="rounded-lg" controls autoplay muted bind:paused={isPaused}>
-			<source src={project.video} type="video/mp4" />
-			Your browser does not support the video tag.
-		</video>
+		<!-- Video -->
+		<div class="mt-12 lg:px-12 w-auto">
+			<video class="rounded-lg" controls autoplay muted bind:paused={isPaused}>
+				<source src={project.video} type="video/mp4" />
+				Your browser does not support the video tag.
+			</video>
+		</div>
 	</div>
 </dialog>
 
@@ -121,4 +141,18 @@
 			opacity: 1;
 		}
 	}
+
+	.better-scrollbar::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+    margin-right: 2.5rem;
+  }
+
+  .better-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2); /* Color of the scrollbar thumb */
+    border-radius: 5px; /* Rounded corners */
+  }
+
+  .better-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent; /* Transparent background */
+  }
 </style>
