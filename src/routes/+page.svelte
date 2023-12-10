@@ -75,7 +75,7 @@
 			<div
 				class="bg-[#141414] drop-shadow rounded-3xl m-4 md:m-20 2xl:m-40 w-auto lg:w-1/2 p-6 md:p-12 text-white text-xl md:text-3xl"
 			>
-				<h1 class="font-extrabold text-white w-full h-32 pt-8 text-4xl md:text-6xl">👑 About Me</h1>
+				<h3 class="font-extrabold text-white w-full h-32 pt-8 text-4xl md:text-6xl">👑 About Me</h3>
 				<p>
 					HI👋, I'm Pol! I'm a developer (and currently a student) who likes to solve problems and
 					challenges through coding, and learn new stuff everyday.
@@ -101,7 +101,7 @@
 	<section id="services">
 		<!-- <div class="h-auto bg-gradient-to-b from-[#141414] from-30% to-[#6B6B6B] pb-10"> -->
 		<div class="h-auto bg-[#141414] pb-10">
-			<h2 class="font-extrabold text-white w-full text-center h-32 pt-16 text-6xl">Services</h2>
+			<h3 class="font-extrabold text-white w-full text-center h-32 pt-16 text-6xl">Services</h3>
 			<div class="flex flex-wrap justify-evenly mx-10 my-16 text-black">
 				<ServiceCard
 					name="Backend Development"
@@ -128,9 +128,9 @@
 	<!-- PROJECTS SECTION -->
 	<section id="projects">
 		<div class="bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900">
-			<h2 class="font-extrabold text-white w-full text-center h-32 pt-16 text-6xl drop-shadow-xl">
+			<h3 class="font-extrabold text-white w-full text-center h-32 pt-16 text-6xl drop-shadow-xl">
 				~ Projects ~
-			</h2>
+			</h3>
 
 			<div class="flex flex-wrap justify-evenly py-20 px-10 lg:px-10 content-between">
 				{#each data.projects as proj}
@@ -143,11 +143,11 @@
 	<!-- CONTACT SECTION -->
 	<section id="contact">
 		<div class="contactbg h-auto pb-5">
-			<h2
+			<h3
 				class="font-extrabold text-white w-full text-center h-32 pt-16 text-3xl md:text-6xl drop-shadow-xl"
 			>
 				Contact
-			</h2>
+			</h3>
 
 			<div class="flex flex-col justify-center w-full">
 				<form
